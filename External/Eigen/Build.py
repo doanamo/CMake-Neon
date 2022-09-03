@@ -1,4 +1,5 @@
 import os
+import sys
 import stat
 import shutil
 
@@ -23,10 +24,13 @@ def remove_dir(path):
 
 # Clone repository
 remove_dir("Repository")
-run_vcdevcmd([
+result = run_vcdevcmd([
     "git clone -c advice.detachedHead=false --depth 1 " +
     "--branch 3.4.0 https://gitlab.com/libeigen/eigen.git Repository"
 ])
+
+if result != 0:
+    sys.exit(result)
 
 # Install library
 remove_dir("Include")

@@ -23,7 +23,7 @@ def remove_dir(path):
 
     shutil.rmtree(path, onerror=make_writable)
 
-# Build project
+# Build library
 remove_dir("Build")
 result = run_vcdevcmd([
     "cmake . -B Build/Debug -G Ninja -D CMAKE_BUILD_TYPE=Debug",
@@ -31,6 +31,9 @@ result = run_vcdevcmd([
     "cmake . -B Build/Release -G Ninja -D CMAKE_BUILD_TYPE=Release",
     "cmake --build Build/Release",
 ])
+
+if result != 0:
+    sys.exit(result)
 
 # Install library
 remove_dir("Library/Windows")

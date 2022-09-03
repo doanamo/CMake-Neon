@@ -2,6 +2,9 @@
 
 int main()
 {
+    Eigen::Vector3f position{ 1.0f, 2.0f, 3.0f };
+    fmt::print("Hello {}", "world!");
+
     if(!glfwInit())
     {
         return 1;

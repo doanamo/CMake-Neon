@@ -54,6 +54,13 @@ set_property(TARGET Game PROPERTY UNITY_BUILD ON)
 # External
 #
 
+# External/fmt
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/fmt/Include")
+target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/fmt/Library/Windows/$<CONFIG>/fmt.lib")
+
+# External/Eigen
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/Eigen/Include")
+
 # External/glad
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glad/Include")
 target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glad/Library/Windows/$<CONFIG>/glad.lib")

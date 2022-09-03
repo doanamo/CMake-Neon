@@ -14,6 +14,9 @@ def run_vcdevcmd(cmds):
     return os.system(shell)
 
 def remove_dir(path):
+    if not os.path.exists(path):
+        return
+
     def make_writable(action, name, exc):
         os.chmod(name, stat.S_IWRITE)
         os.remove(name)

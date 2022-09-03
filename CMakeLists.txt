@@ -1,9 +1,30 @@
 ﻿cmake_minimum_required(VERSION 3.23)
 project("Infiltrator")
 
+#
+# Sources
+#
+
 set(SOURCE_FILES
     "Source/Main.cpp"
+    "Source/Precompiled.hpp"
 )
 
+#
+# Executable
+#
+
 add_executable(Game ${SOURCE_FILES})
-set_property(TARGET Game PROPERTY CXX_STANDARD 20)
+target_include_directories(Game PRIVATE "Source")
+target_precompile_headers(Game PRIVATE "Source/Precompiled.hpp")
+
+set_target_properties(Game PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    UNITY_BUILD ON
+)
+
+if(MSVC AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(Game PUBLIC "/ZI")
+    target_link_options(Game PUBLIC "/INCREMENTAL")
+endif()

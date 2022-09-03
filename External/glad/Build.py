@@ -32,7 +32,7 @@ result = run_vcdevcmd([
     "cmake --build Build/Release",
 ])
 
-# Save libraries
+# Install library
 remove_dir("Library/Windows")
 os.makedirs("Library/Windows/Debug")
 os.makedirs("Library/Windows/Release")

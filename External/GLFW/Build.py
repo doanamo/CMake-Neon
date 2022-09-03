@@ -53,7 +53,7 @@ result = run_vcdevcmd([
 if result != 0:
     sys.exit(result)
 
-# Install configurations
+# Install library
 remove_dir("Library/Windows")
 remove_dir("Include")
 

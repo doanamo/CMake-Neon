@@ -2,6 +2,12 @@
 
 int main()
 {
-    std::cout << "Hello there!" << std::endl;
+    // Initialize GLFW library
+    if(!glfwInit())
+    {
+        return 1;
+    }
+
+    glfwTerminate();
     return 0;
 }

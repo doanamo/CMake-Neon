@@ -28,3 +28,11 @@ if(MSVC AND CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(Game PUBLIC "/ZI")
     target_link_options(Game PUBLIC "/INCREMENTAL")
 endif()
+
+#
+# External
+#
+
+# External/GLFW
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Include")
+target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Library/Windows/$<CONFIG>/glfw3.lib")

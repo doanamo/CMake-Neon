@@ -33,6 +33,10 @@ endif()
 # External
 #
 
+# External/glad
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glad/Include")
+target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glad/Library/Windows/$<CONFIG>/glad.lib")
+
 # External/GLFW
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Include")
 target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Library/Windows/$<CONFIG>/glfw3.lib")

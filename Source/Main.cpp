@@ -2,8 +2,18 @@
 
 int main()
 {
-    // Initialize GLFW library
     if(!glfwInit())
+    {
+        return 1;
+    }
+
+    GLFWwindow* window = glfwCreateWindow(1024, 576, "Game", nullptr, nullptr);
+    if(window == nullptr)
+    {
+        return 1;
+    }
+
+    if (!gladLoadGL(glfwGetProcAddress))
     {
         return 1;
     }

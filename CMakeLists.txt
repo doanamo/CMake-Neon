@@ -2,6 +2,32 @@
 project("Infiltrator")
 
 #
+# Options
+#
+
+# Require specific C++ standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Enable fast math
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /fp:fast")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffast-math")
+endif()
+
+# Enable edit and continue for debug configuration
+if(MSVC)
+    string(REPLACE "/Zi" "/ZI" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+endif()
+
+# Enable debug symbols for release configuration
+if(MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
+    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+endif()
+
+#
 # Sources
 #
 
@@ -11,23 +37,18 @@ set(SOURCE_FILES
 )
 
 #
-# Executable
+# Target
 #
 
+# Executable target
 add_executable(Game ${SOURCE_FILES})
 target_include_directories(Game PRIVATE "Source")
+
+# Enable precompiled header
 target_precompile_headers(Game PRIVATE "Source/Precompiled.hpp")
 
-set_target_properties(Game PROPERTIES
-    CXX_STANDARD 20
-    CXX_STANDARD_REQUIRED ON
-    UNITY_BUILD ON
-)
-
-if(MSVC AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_options(Game PUBLIC "/ZI")
-    target_link_options(Game PUBLIC "/INCREMENTAL")
-endif()
+# Enable unity build
+set_property(TARGET Game PROPERTY UNITY_BUILD ON)
 
 #
 # External

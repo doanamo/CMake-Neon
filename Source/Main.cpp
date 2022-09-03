@@ -13,7 +13,8 @@ int main()
         return 1;
     }
 
-    if (!gladLoadGL(glfwGetProcAddress))
+    glfwMakeContextCurrent(window);
+    if(!gladLoadGL(glfwGetProcAddress))
     {
         return 1;
     }

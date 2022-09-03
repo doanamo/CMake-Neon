@@ -60,4 +60,4 @@ target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glad/Library/
 
 # External/GLFW
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Include")
-target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Library/Windows/$<CONFIG>/glfw3.lib")
+target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/GLFW/Library/Windows/$<CONFIG>/glfw.lib")

@@ -6,5 +6,4 @@ if(MSVC)
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
 endif()
 
-add_library(glad STATIC "Source/gl.c")
-target_include_directories(glad PUBLIC "Include")
+add_subdirectory(Repository)

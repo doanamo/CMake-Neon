@@ -44,9 +44,9 @@ cmake_cache_opts = (
 
 remove_dir("Build")
 result = run_vcdevcmd([
-    "cmake Repository -B Build/Debug -D CMAKE_BUILD_TYPE=Debug " + cmake_cache_opts,
+    "cmake . -B Build/Debug -D CMAKE_BUILD_TYPE=Debug " + cmake_cache_opts,
     "cmake --build Build/Debug",
-    "cmake Repository -B Build/Release -D CMAKE_BUILD_TYPE=Release " + cmake_cache_opts,
+    "cmake . -B Build/Release -D CMAKE_BUILD_TYPE=Release " + cmake_cache_opts,
     "cmake --build Build/Release",
 ])
 
@@ -60,7 +60,8 @@ remove_dir("Include")
 os.makedirs("Library/Windows/Debug")
 os.makedirs("Library/Windows/Release")
 
-shutil.copy(glob.glob("Build/Debug/**/glfw3.lib", recursive=True)[0], "Library/Windows/Debug/glfw3.lib")
-shutil.copy(glob.glob("Build/Debug/**/glfw.pdb", recursive=True)[0], "Library/Windows/Debug/glfw3.pdb")
-shutil.copy(glob.glob("Build/Release/**/glfw3.lib", recursive=True)[0], "Library/Windows/Release/glfw3.lib")
+shutil.copy(glob.glob("Build/Debug/**/glfw3.lib", recursive=True)[0], "Library/Windows/Debug/glfw.lib")
+shutil.copy(glob.glob("Build/Debug/**/glfw.pdb", recursive=True)[0], "Library/Windows/Debug/glfw.pdb")
+shutil.copy(glob.glob("Build/Release/**/glfw3.lib", recursive=True)[0], "Library/Windows/Release/glfw.lib")
+shutil.copy(glob.glob("Build/Release/**/glfw.pdb", recursive=True)[0], "Library/Windows/Release/glfw.pdb")
 shutil.copytree("Repository/include", "Include")

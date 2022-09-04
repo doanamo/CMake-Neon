@@ -42,10 +42,10 @@ cmake_cache_opts = (
 
 remove_dir("Build")
 result = run_vcdevcmd([  
-  "cmake . -B Build/Debug -D CMAKE_BUILD_TYPE=Debug" + cmake_cache_opts,
-  "cmake --build Build/Debug",
-  "cmake . -B Build/Release -D CMAKE_BUILD_TYPE=Release" + cmake_cache_opts,
-  "cmake --build Build/Release",
+    "cmake . -B Build/Debug -D CMAKE_BUILD_TYPE=Debug" + cmake_cache_opts,
+    "cmake --build Build/Debug",
+    "cmake . -B Build/Release -D CMAKE_BUILD_TYPE=Release" + cmake_cache_opts,
+    "cmake --build Build/Release",
 ])
 
 if result != 0:

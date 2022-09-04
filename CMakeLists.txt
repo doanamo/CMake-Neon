@@ -58,6 +58,11 @@ set_property(TARGET Game PROPERTY UNITY_BUILD ON)
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/fmt/Include")
 target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/fmt/Library/Windows/$<CONFIG>/fmt.lib")
 
+# External/spdlog
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/spdlog/Include")
+target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/spdlog/Library/Windows/$<CONFIG>/spdlog.lib")
+target_compile_definitions(Game PRIVATE SPDLOG_FMT_EXTERNAL SPDLOG_COMPILED_LIB)
+
 # External/Eigen
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/Eigen/Include")
 

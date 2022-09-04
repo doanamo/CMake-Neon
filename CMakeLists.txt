@@ -27,6 +27,12 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
 endif()
 
+# Disable console window for release configuration
+if(MSVC)
+    set(CMAKE_WIN32_EXECUTABLE $<$<CONFIG:Release>:ON>)
+    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /ENTRY:mainCRTStartup")
+endif()
+
 #
 # Sources
 #

@@ -1,5 +1,14 @@
 #pragma once
 
+// Standard
+
+// Common
+#include "Common/Compiler.hpp"
+
+// Disable all warnings for external headers
+// This also guards against leaking warning pragmas
+COMPILER_WARNINGS_DISABLE_ALL_PUSH()
+
 // External/fmt
 #include <fmt/format.h>
 
@@ -22,3 +31,6 @@
 
 // External/GLFW
 #include <GLFW/glfw3.h>
+
+// Restore disabled warnings
+COMPILER_WARNINGS_DISABLE_ALL_POP()

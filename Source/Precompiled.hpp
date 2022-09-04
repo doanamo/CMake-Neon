@@ -4,6 +4,7 @@
 
 // Common
 #include "Common/Compiler.hpp"
+#include "Common/Logger.hpp"
 
 // Disable all warnings for external headers
 // This also guards against leaking warning pragmas

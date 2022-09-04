@@ -8,6 +8,12 @@
     #error "Unknown compiler!"
 #endif
 
+#if defined(NDEBUG)
+    #define CONFIG_RELEASE
+#else
+    #define CONFIG_DEBUG
+#endif
+
 #define EXPAND(x) x
 #define STRINGIFY(x) #x
 #define PRAGMA(x) _Pragma(#x)

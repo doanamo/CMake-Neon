@@ -33,7 +33,7 @@ endif()
 
 set(SOURCE_FILES
     "Source/Main.cpp"
-    "Source/Precompiled.hpp"
+    "Source/Common/Logger.cpp"
 )
 
 #

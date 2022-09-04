@@ -17,10 +17,10 @@ void Logger::Setup()
 
     // Setup log message settings based on configuration
 #ifdef CONFIG_RELEASE
-    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S][%n][%l] %v");
+    spdlog::set_pattern("[%H:%M:%S][%n][%l] %v");
     spdlog::set_level(spdlog::level::info);
 #else
-    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S][%n][%t][%^%l%$] %v");
+    spdlog::set_pattern("[%H:%M:%S][%n][%t][%^%l%$] %v");
     spdlog::set_level(spdlog::level::trace);
 #endif
 }

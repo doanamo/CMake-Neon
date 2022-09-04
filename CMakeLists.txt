@@ -32,8 +32,9 @@ endif()
 #
 
 set(SOURCE_FILES
-    "Source/Main.cpp"
     "Source/Common/Logger.cpp"
+    "Source/Application.cpp"
+    "Source/Main.cpp"
 )
 
 #

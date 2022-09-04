@@ -1,11 +1,13 @@
 #pragma once
 
 // Standard
+#include <functional>
 
 // Common
 #include "Common/Compiler.hpp"
 #include "Common/Logger.hpp"
 #include "Common/Debug.hpp"
+#include "Common/ScopeGuard.hpp"
 
 // Disable all warnings for external headers
 // This also guards against leaking warning pragmas

@@ -33,15 +33,30 @@ if(MSVC)
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /ENTRY:mainCRTStartup")
 endif()
 
+# Define available configurations
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
+
+# Enable folders in Visual Studio solution
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMake")
+
 #
 # Sources
 #
 
 set(SOURCE_FILES
-    "Source/Common/Logger.cpp"
-    "Source/Application.cpp"
     "Source/Main.cpp"
+    "Source/Precompiled.hpp"
+    "Source/Application.hpp"
+    "Source/Application.cpp"
+    "Source/Common/Compiler.hpp"
+    "Source/Common/Debug.hpp"
+    "Source/Common/Logger.hpp"
+    "Source/Common/Logger.cpp"
+    "Source/Common/ScopeGuard.hpp"
 )
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 
 #
 # Target
@@ -53,9 +68,14 @@ target_include_directories(Game PRIVATE "Source")
 
 # Enable precompiled header
 target_precompile_headers(Game PRIVATE "Source/Precompiled.hpp")
+source_group("Generated\\Precompiled" REGULAR_EXPRESSION "cmake_pch")
 
 # Enable unity build
 set_property(TARGET Game PROPERTY UNITY_BUILD ON)
+source_group("Generated\\Unity" REGULAR_EXPRESSION "unity_")
+
+# Set as startup project
+set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Game)
 
 #
 # External

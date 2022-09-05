@@ -1,4 +1,5 @@
 /.vs/
-/Build/
+/.vscode/
+/Build/CMake-*/
 /External/*/Build/
 /External/*/Repository/

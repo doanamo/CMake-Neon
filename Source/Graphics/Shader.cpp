@@ -54,10 +54,10 @@ Graphics::Shader::~Shader()
 
 bool Graphics::Shader::Setup(LoadFromFiles& params)
 {
-    std::string sources[ShaderTypeCount] = {};
+    LoadFromSources setupParams{};
     for(int i = 0; i < ShaderTypeCount; ++i)
     {
-        const fs::path& path = params.paths[i];
+        fs::path& path = params.paths[i];
         if(path.empty())
             continue;
 
@@ -67,17 +67,11 @@ bool Graphics::Shader::Setup(LoadFromFiles& params)
             LOG_ERROR("Failed to read shader source from \"{}\" file", path);
             return false;
         }
-        
-        sources[ShaderTypeCount] = std::move(result.value());
-    }
 
-    LoadFromSources setupParams{};
-    for(int i = 0; i < ShaderTypeCount; ++i)
-    {
         setupParams.sources[i] =
         {
-            .source = std::move(sources[i]),
-            .path = std::move(params.paths[i]),
+            .source = std::move(result.value()),
+            .path = std::move(path),
         };
     }
 

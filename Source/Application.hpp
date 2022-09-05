@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Precompiled.hpp"
+#include "Graphics/Shader.hpp"
 
 class Application final
 {
 public:
-    Application(GLFWwindow* window);
+    explicit Application(GLFWwindow* window);
     ~Application() = default;
 
     Application(const Application&) = delete;
@@ -27,4 +27,6 @@ public:
 
 private:
     GLFWwindow* m_window = nullptr;
+
+    Graphics::Shader m_shader;
 };

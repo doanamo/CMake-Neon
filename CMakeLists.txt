@@ -61,6 +61,12 @@ set(SOURCE_FILES
     "Source/Common/Logger.hpp"
     "Source/Common/Logger.cpp"
     "Source/Common/ScopeGuard.hpp"
+    "Source/Common/Utility.hpp"
+    "Source/Common/Utility.cpp"
+    "Source/Graphics/OpenGL.hpp"
+    "Source/Graphics/OpenGL.cpp"
+    "Source/Graphics/Shader.hpp"
+    "Source/Graphics/Shader.cpp"
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})

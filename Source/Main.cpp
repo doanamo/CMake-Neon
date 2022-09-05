@@ -6,7 +6,7 @@ void GLFWErrorCallback(int error, const char* description)
     LOG_ERROR("GLFW Error: {} [{}]", description, error);
 }
 
-void GLFWKeyCallback(GLFWwindow* window,
+void GLFWKeyboardKeyCallback(GLFWwindow* window,
     int key, int scancode, int action, int mods)
 {
     auto* app = reinterpret_cast<Application*>(
@@ -31,7 +31,7 @@ int main()
     // Initialize GLFW library
     if(!glfwInit())
     {
-        LOG_ERROR("Failed to initialize GLFW!");
+        LOG_ERROR("Failed to initialize GLFW");
         return 1;
     }
 
@@ -55,7 +55,7 @@ int main()
 
     if(window == nullptr)
     {
-        LOG_ERROR("Failed to create window!");
+        LOG_ERROR("Failed to create window");
         return 1;
     }
 
@@ -64,7 +64,7 @@ int main()
         glfwDestroyWindow(window);
     });
 
-    glfwSetKeyCallback(window, GLFWKeyCallback);
+    glfwSetKeyCallback(window, GLFWKeyboardKeyCallback);
 
     LOG_INFO("Created window");
 
@@ -74,7 +74,7 @@ int main()
     int contextVersion = gladLoadGL(glfwGetProcAddress);
     if(contextVersion == 0)
     {
-        LOG_ERROR("Failed to load OpenGL context!");
+        LOG_ERROR("Failed to load OpenGL context");
         return 1;
     }
 
@@ -86,7 +86,7 @@ int main()
     Application app(window);
     if(!app.Setup())
     {
-        LOG_ERROR("Failed to initialize application!");
+        LOG_ERROR("Failed to initialize application");
         return -1;
     }
 

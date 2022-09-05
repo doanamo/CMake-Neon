@@ -1,13 +1,21 @@
 #pragma once
 
 // Standard
+#include <cstdint>
+#include <memory>
+#include <string>
+#include <vector>
+#include <optional>
 #include <functional>
+#include <filesystem>
+#include <fstream>
+
+namespace fs = std::filesystem;
 
 // Common
 #include "Common/Compiler.hpp"
 #include "Common/Logger.hpp"
 #include "Common/Debug.hpp"
-#include "Common/ScopeGuard.hpp"
 
 // Disable all warnings for external headers
 // This also guards against leaking warning pragmas
@@ -32,3 +40,7 @@ COMPILER_WARNINGS_DISABLE_ALL_PUSH()
 
 // Restore disabled warnings
 COMPILER_WARNINGS_DISABLE_ALL_POP()
+
+// Common
+#include "Common/ScopeGuard.hpp"
+#include "Common/Utility.hpp"

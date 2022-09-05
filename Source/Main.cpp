@@ -31,7 +31,7 @@ int main()
     // Initialize GLFW library
     if(!glfwInit())
     {
-        LOG_ERROR("Failed to initialize GLFW");
+        LOG_CRITICAL("Failed to initialize GLFW");
         return 1;
     }
 
@@ -55,7 +55,7 @@ int main()
 
     if(window == nullptr)
     {
-        LOG_ERROR("Failed to create window");
+        LOG_CRITICAL("Failed to create window");
         return 1;
     }
 
@@ -74,7 +74,7 @@ int main()
     int contextVersion = gladLoadGL(glfwGetProcAddress);
     if(contextVersion == 0)
     {
-        LOG_ERROR("Failed to load OpenGL context");
+        LOG_CRITICAL("Failed to load OpenGL context");
         return 1;
     }
 
@@ -86,7 +86,7 @@ int main()
     Application app(window);
     if(!app.Setup())
     {
-        LOG_ERROR("Failed to initialize application");
+        LOG_CRITICAL("Failed to initialize application");
         return -1;
     }
 

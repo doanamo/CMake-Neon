@@ -54,7 +54,7 @@ Graphics::Shader::~Shader()
 
 bool Graphics::Shader::Setup(LoadFromFiles& params)
 {
-    LoadFromSources setupParams{};
+    LoadFromSources setupParams;
     for(int i = 0; i < ShaderTypeCount; ++i)
     {
         fs::path& path = params.paths[i];

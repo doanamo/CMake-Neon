@@ -48,6 +48,9 @@ namespace Graphics
 
         bool Setup(LoadFromSources& params);
 
+        GLint GetAttributeIndex(const char* name) const;
+        GLint GetUniformIndex(const char* name) const;
+
     private:
         GLuint m_handle = OpenGL::InvalidHandle;
     };

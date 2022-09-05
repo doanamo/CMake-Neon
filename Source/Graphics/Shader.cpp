@@ -186,3 +186,17 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
 
     return true;
 }
+
+GLint Graphics::Shader::GetAttributeIndex(const char* name) const
+{
+    GLint location = glGetAttribLocation(m_handle, name);
+    OPENGL_CHECK_ERRORS();
+    return location;
+}
+
+GLint Graphics::Shader::GetUniformIndex(const char* name) const
+{
+    GLint location = glGetUniformLocation(m_handle, name);
+    OPENGL_CHECK_ERRORS();
+    return location;
+}

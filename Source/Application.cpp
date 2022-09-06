@@ -14,7 +14,9 @@ Application::Application(GLFWwindow* window)
 
 bool Application::Setup()
 {
-    static const char* vertexShader =
+    Graphics::Shader::LoadFromSources shaderParams;
+
+    shaderParams.vertexShader.source =
         "#version 330\n"
         "uniform mat4 inTransform;\n"
         "attribute vec2 inPosition;\n"
@@ -26,7 +28,7 @@ bool Application::Setup()
         "    outColor = inColor;\n"
         "}\n";
 
-    static const char* fragmentShader =
+    shaderParams.fragmentShader.source =
         "#version 330\n"
         "varying vec3 inColor;\n"
         "void main()\n"
@@ -34,9 +36,6 @@ bool Application::Setup()
         "    gl_FragColor = vec4(inColor, 1.0);\n"
         "}\n";
 
-    Graphics::Shader::LoadFromSources shaderParams;
-    shaderParams.SetSource(Graphics::ShaderType::VertexShader, vertexShader);
-    shaderParams.SetSource(Graphics::ShaderType::FragmentShader, fragmentShader);
     if(!m_shader.Setup(shaderParams))
         return false;
 

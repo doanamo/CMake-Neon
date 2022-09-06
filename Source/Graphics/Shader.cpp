@@ -1,48 +1,6 @@
 #include "Precompiled.hpp"
 #include "Shader.hpp"
 
-Graphics::ShaderType Graphics::GetShaderType(int index)
-{
-    ASSERT(index < ShaderTypeCount, "Index out of range!");
-    return static_cast<ShaderType>(index);
-}
-
-size_t Graphics::GetShaderTypeIndex(ShaderType type)
-{
-    ASSERT(type < ShaderType::Count, "Invalid type!");
-    return static_cast<size_t>(type);
-}
-
-GLenum Graphics::GetShaderTypeEnum(ShaderType type)
-{
-    switch(type)
-    {
-    case ShaderType::VertexShader:
-        return GL_VERTEX_SHADER;
-
-    case ShaderType::FragmentShader:
-        return GL_FRAGMENT_SHADER;
-
-    default:
-        ASSERT(false, "Invalid shader type!");
-        return GL_INVALID_ENUM;
-    }
-}
-
-void Graphics::Shader::LoadFromFiles::SetPath(ShaderType type, fs::path path)
-{
-    paths[GetShaderTypeIndex(type)] = std::move(path);
-}
-
-void Graphics::Shader::LoadFromSources::SetSource(ShaderType type, std::string source, fs::path path)
-{
-    sources[GetShaderTypeIndex(type)] =
-    {
-        .source = std::move(source),
-        .path = std::move(path),
-    };
-}
-
 Graphics::Shader::~Shader()
 {
     if(m_handle != 0)
@@ -54,10 +12,24 @@ Graphics::Shader::~Shader()
 
 bool Graphics::Shader::Setup(LoadFromFiles& params)
 {
-    LoadFromSources setupParams;
-    for(int i = 0; i < ShaderTypeCount; ++i)
+    fs::path* inputParamsMapping[] =
     {
-        fs::path& path = params.paths[i];
+        &params.vertexShaderPath,
+        &params.fragmentShaderPath,
+    };
+
+    LoadFromSources setupParams;
+    LoadFromSources::Shader* outputParamsMapping[] =
+    {
+        &setupParams.vertexShader,
+        &setupParams.fragmentShader,
+    };
+
+    static_assert(std::size(inputParamsMapping) == std::size(outputParamsMapping));
+
+    for(int i = 0; i < std::size(outputParamsMapping); ++i)
+    {
+        fs::path& path = *inputParamsMapping[i];
         if(path.empty())
             continue;
 
@@ -68,11 +40,9 @@ bool Graphics::Shader::Setup(LoadFromFiles& params)
             return false;
         }
 
-        setupParams.sources[i] =
-        {
-            .source = std::move(result.value()),
-            .path = std::move(path),
-        };
+        LoadFromSources::Shader& shaderSource = *outputParamsMapping[i];
+        shaderSource.source = std::move(result.value());
+        shaderSource.path = std::move(path);
     }
 
     return Setup(setupParams);
@@ -82,6 +52,20 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
 {
     OPENGL_CHECK_ERRORS_SCOPED();
     ASSERT(m_handle == OpenGL::InvalidHandle);
+
+    struct ParamMapping
+    {
+        LoadFromSources::Shader& shader;
+        GLenum shaderType;
+    };
+
+    ParamMapping paramsMapping[] =
+    {
+        { params.vertexShader, GL_VERTEX_SHADER },
+        { params.fragmentShader, GL_FRAGMENT_SHADER },
+    };
+
+    constexpr int ShaderTypeCount = std::size(paramsMapping);
 
     GLuint shaderObjects[ShaderTypeCount] = {};
     SCOPE_GUARD([&shaderObjects]()
@@ -95,15 +79,13 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
     bool shaderObjectCompiled = false;
     for(int i = 0; i < ShaderTypeCount; ++i)
     {
-        const ShaderType shaderType = GetShaderType(i);
-        const std::string& shaderSource = params.sources[i].source;
-        const fs::path& sourcePath = params.sources[i].path;
-        if(shaderSource.empty())
+        const ParamMapping& param = paramsMapping[i];
+        if(param.shader.source.empty())
             continue;
 
         GLuint& shaderObject = shaderObjects[i];
-        shaderObject = glCreateShader(GetShaderTypeEnum(shaderType));
-        const char* shaderSourcePtr = shaderSource.c_str();
+        shaderObject = glCreateShader(param.shaderType);
+        const char* shaderSourcePtr = param.shader.source.c_str();
         glShaderSource(shaderObject, 1, &shaderSourcePtr, nullptr);
         glCompileShader(shaderObject);
     
@@ -113,10 +95,10 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
         {
             std::vector<char> compileLogBuffer(compileLogLength);
             glGetShaderInfoLog(shaderObject, compileLogLength, nullptr, compileLogBuffer.data());
-            if(!sourcePath.empty())
+            if(!param.shader.path.empty())
             {
                 LOG_INFO("Shader object compile log for \"{}\" file:\n{}",
-                    sourcePath, compileLogBuffer.data());
+                    param.shader.path, compileLogBuffer.data());
             }
             else
             {

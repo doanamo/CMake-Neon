@@ -23,14 +23,14 @@ namespace Graphics
 
         struct LoadFromSources
         {
-            struct Shader
+            struct ShaderSource
             {
                 std::string source;
                 fs::path path;
             };
 
-            Shader vertexShader;
-            Shader fragmentShader;
+            ShaderSource vertexShader;
+            ShaderSource fragmentShader;
         };
 
         bool Setup(LoadFromSources& params);

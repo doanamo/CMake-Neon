@@ -12,24 +12,23 @@ Graphics::Shader::~Shader()
 
 bool Graphics::Shader::Setup(LoadFromFiles& params)
 {
-    fs::path* inputParamsMapping[] =
+    fs::path* const shaderPaths[] =
     {
         &params.vertexShader,
         &params.fragmentShader,
     };
 
-    LoadFromSources setupParams;
-    LoadFromSources::Shader* outputParamsMapping[] =
+    LoadFromSources loadFromSourcesParams;
+    LoadFromSources::ShaderSource* const shaderSources[] =
     {
-        &setupParams.vertexShader,
-        &setupParams.fragmentShader,
+        &loadFromSourcesParams.vertexShader,
+        &loadFromSourcesParams.fragmentShader,
     };
 
-    static_assert(std::size(inputParamsMapping) == std::size(outputParamsMapping));
-
-    for(int i = 0; i < std::size(outputParamsMapping); ++i)
+    static_assert(std::size(shaderPaths) == std::size(shaderSources));
+    for(int i = 0; i < std::size(shaderSources); ++i)
     {
-        fs::path& path = *inputParamsMapping[i];
+        fs::path& path = *shaderPaths[i];
         if(path.empty())
             continue;
 
@@ -40,12 +39,12 @@ bool Graphics::Shader::Setup(LoadFromFiles& params)
             return false;
         }
 
-        LoadFromSources::Shader& shaderSource = *outputParamsMapping[i];
+        auto& shaderSource = *shaderSources[i];
         shaderSource.source = std::move(result.value());
         shaderSource.path = std::move(path);
     }
 
-    return Setup(setupParams);
+    return Setup(loadFromSourcesParams);
 }
 
 bool Graphics::Shader::Setup(LoadFromSources& params)
@@ -53,21 +52,28 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
     OPENGL_CHECK_ERRORS_SCOPED();
     ASSERT(m_handle == OpenGL::InvalidHandle);
 
-    struct ParamMapping
+    struct ShaderSource
     {
-        LoadFromSources::Shader& shader;
-        GLenum shaderType;
+        std::string& source;
+        fs::path& path;
+        GLenum type;
     };
 
-    ParamMapping paramsMapping[] =
+    ShaderSource const shaderSources[] =
     {
-        { params.vertexShader, GL_VERTEX_SHADER },
-        { params.fragmentShader, GL_FRAGMENT_SHADER },
+        {
+            params.vertexShader.source,
+            params.vertexShader.path,
+            GL_VERTEX_SHADER
+        },
+        {
+            params.fragmentShader.source,
+            params.fragmentShader.path,
+            GL_FRAGMENT_SHADER
+        },
     };
 
-    constexpr int ShaderTypeCount = std::size(paramsMapping);
-
-    GLuint shaderObjects[ShaderTypeCount] = {};
+    GLuint shaderObjects[std::size(shaderSources)] = {};
     SCOPE_GUARD([&shaderObjects]()
     {
         for(GLuint shaderObject : shaderObjects)
@@ -77,15 +83,15 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
     });
 
     bool shaderObjectCompiled = false;
-    for(int i = 0; i < ShaderTypeCount; ++i)
+    for(int i = 0; i < std::size(shaderSources); ++i)
     {
-        const ParamMapping& param = paramsMapping[i];
-        if(param.shader.source.empty())
+        const ShaderSource& shader = shaderSources[i];
+        if(shader.source.empty())
             continue;
 
         GLuint& shaderObject = shaderObjects[i];
-        shaderObject = glCreateShader(param.shaderType);
-        const char* shaderSourcePtr = param.shader.source.c_str();
+        shaderObject = glCreateShader(shader.type);
+        const char* shaderSourcePtr = shader.source.c_str();
         glShaderSource(shaderObject, 1, &shaderSourcePtr, nullptr);
         glCompileShader(shaderObject);
     
@@ -94,15 +100,17 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
         if(compileLogLength > 1)
         {
             std::vector<char> compileLogBuffer(compileLogLength);
-            glGetShaderInfoLog(shaderObject, compileLogLength, nullptr, compileLogBuffer.data());
-            if(!param.shader.path.empty())
+            glGetShaderInfoLog(shaderObject, compileLogLength,
+                nullptr, compileLogBuffer.data());
+            if(!shader.path.empty())
             {
                 LOG_INFO("Shader object compile log for \"{}\" file:\n{}",
-                    param.shader.path, compileLogBuffer.data());
+                    shader.path, compileLogBuffer.data());
             }
             else
             {
-                LOG_INFO("Shader object compile log:\n{}", compileLogBuffer.data());
+                LOG_INFO("Shader object compile log:\n{}",
+                    compileLogBuffer.data());
             }
         }
 
@@ -159,7 +167,6 @@ bool Graphics::Shader::Setup(LoadFromSources& params)
     }
 
     LOG_TRACE("Created shader program");
-
     return true;
 }
 

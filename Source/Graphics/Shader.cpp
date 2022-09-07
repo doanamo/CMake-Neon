@@ -14,8 +14,8 @@ bool Graphics::Shader::Setup(LoadFromFiles& params)
 {
     fs::path* inputParamsMapping[] =
     {
-        &params.vertexShaderPath,
-        &params.fragmentShaderPath,
+        &params.vertexShader,
+        &params.fragmentShader,
     };
 
     LoadFromSources setupParams;

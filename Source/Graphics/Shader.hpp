@@ -15,8 +15,8 @@ namespace Graphics
 
         struct LoadFromFiles
         {
-            fs::path vertexShaderPath;
-            fs::path fragmentShaderPath;
+            fs::path vertexShader;
+            fs::path fragmentShader;
         };
 
         bool Setup(LoadFromFiles& params);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics/Shader.hpp"
+#include "Graphics/Buffer.hpp"
 
 class Application final
 {
@@ -28,5 +29,6 @@ public:
 private:
     GLFWwindow* m_window = nullptr;
 
+    Graphics::Buffer m_vertexBuffer;
     Graphics::Shader m_shader;
 };

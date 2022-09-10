@@ -3,6 +3,7 @@
 namespace OpenGL
 {
     constexpr GLuint InvalidHandle = 0;
+    constexpr GLenum InvalidEnum = 0;
 
     const char* GetErrorName(GLuint error);
     bool CheckErrors();

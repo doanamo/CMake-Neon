@@ -14,17 +14,36 @@ Application::Application(GLFWwindow* window)
 
 bool Application::Setup()
 {
-    Graphics::Shader::LoadFromSources shaderParams;
+    Vertex vertices[] =
+    {
+        { { -0.6f, -0.4f, 0.0f }, { 1.0f, 0.0f, 0.0f  } },
+        { {  0.6f, -0.4f, 0.0f }, { 0.0f, 1.0f, 0.0f  } },
+        { {  0.0f,  0.6f, 0.0f }, { 0.0f, 0.0f, 1.0f  } }
+    };
+
+    Graphics::Buffer::SetupFromParams vertexBufferParams
+    {
+        .type = GL_ARRAY_BUFFER,
+        .usage = GL_STATIC_DRAW,
+        .elementSize = sizeof(Vertex),
+        .elementCount = std::size(vertices),
+        .data = &vertices[0]
+    };
+
+    if(!m_vertexBuffer.Setup(vertexBufferParams))
+        return false;
+
+    Graphics::Shader::SetupFromSources shaderParams;
 
     shaderParams.vertexShader.source =
         "#version 330\n"
         "uniform mat4 inTransform;\n"
-        "attribute vec2 inPosition;\n"
+        "attribute vec3 inPosition;\n"
         "attribute vec3 inColor;\n"
         "varying vec3 outColor;\n"
         "void main()\n"
         "{\n"
-        "    gl_Position = inTransform * vec4(inPosition, 0.0, 1.0);\n"
+        "    gl_Position = inTransform * vec4(inPosition, 1.0f);\n"
         "    outColor = inColor;\n"
         "}\n";
 
@@ -33,7 +52,7 @@ bool Application::Setup()
         "varying vec3 inColor;\n"
         "void main()\n"
         "{\n"
-        "    gl_FragColor = vec4(inColor, 1.0);\n"
+        "    gl_FragColor = vec4(inColor, 1.0f);\n"
         "}\n";
 
     if(!m_shader.Setup(shaderParams))

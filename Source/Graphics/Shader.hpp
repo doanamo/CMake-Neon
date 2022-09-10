@@ -8,20 +8,20 @@ namespace Graphics
     {
     public:
         Shader() = default;
-        ~Shader();
+        ~Shader() noexcept;
 
         Shader(Shader&) = delete;
         Shader& operator=(const Shader&) = delete;
 
-        struct LoadFromFiles
+        struct SetupFromFiles
         {
             fs::path vertexShader;
             fs::path fragmentShader;
         };
 
-        bool Setup(LoadFromFiles& params);
+        bool Setup(SetupFromFiles& params);
 
-        struct LoadFromSources
+        struct SetupFromSources
         {
             struct ShaderSource
             {
@@ -33,10 +33,27 @@ namespace Graphics
             ShaderSource fragmentShader;
         };
 
-        bool Setup(LoadFromSources& params);
+        bool Setup(SetupFromSources& params);
 
-        GLint GetAttributeIndex(const char* name) const;
-        GLint GetUniformIndex(const char* name) const;
+        GLuint GetHandle() const
+        {
+            ASSERT(m_handle != OpenGL::InvalidHandle);
+            return m_handle;
+        }
+        
+        GLint GetAttributeIndex(const char* name) const
+        {
+            GLint location = glGetAttribLocation(m_handle, name);
+            OPENGL_CHECK_ERRORS();
+            return location;
+        }
+
+        GLint GetUniformIndex(const char* name) const
+        {
+            GLint location = glGetUniformLocation(m_handle, name);
+            OPENGL_CHECK_ERRORS();
+            return location;
+        }
 
     private:
         GLuint m_handle = OpenGL::InvalidHandle;

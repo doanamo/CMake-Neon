@@ -44,6 +44,7 @@ namespace Graphics
         GLint GetAttributeIndex(const char* name) const
         {
             GLint location = glGetAttribLocation(m_handle, name);
+            ASSERT(location >= 0, "Failed to find shader attribute");
             OPENGL_CHECK_ERRORS();
             return location;
         }
@@ -51,6 +52,7 @@ namespace Graphics
         GLint GetUniformIndex(const char* name) const
         {
             GLint location = glGetUniformLocation(m_handle, name);
+            ASSERT(location >= 0, "Failed to find shader uniform");
             OPENGL_CHECK_ERRORS();
             return location;
         }

@@ -5,7 +5,7 @@ namespace Graphics
 {
     Buffer::~Buffer() noexcept
     {
-        if(m_handle != OpenGL::InvalidHandle)
+        if(m_handle != 0)
         {
             glDeleteBuffers(1, &m_handle);
             OPENGL_CHECK_ERRORS();
@@ -18,7 +18,7 @@ namespace Graphics
     bool Buffer::Setup(const SetupFromParams& params)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
-        ASSERT(m_handle == OpenGL::InvalidHandle);
+        ASSERT(m_handle == 0);
 
         GLsizeiptr bufferSize = params.elementSize * params.elementCount;
         ASSERT(bufferSize > 0, "Cannot create empty buffer!");
@@ -40,7 +40,7 @@ namespace Graphics
     void Buffer::Update(uint64_t elementIndex, uint64_t elementCount, const void* data)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
-        ASSERT(m_handle != OpenGL::InvalidHandle);
+        ASSERT(m_handle != 0);
 
         uint64_t offset = m_elementSize * elementIndex;
         uint64_t size = m_elementSize * elementCount;
@@ -55,7 +55,7 @@ namespace Graphics
     void Buffer::Resize(uint64_t elementCount, const void* data)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
-        ASSERT(m_handle != OpenGL::InvalidHandle);
+        ASSERT(m_handle != 0);
 
         uint64_t bufferSize = m_elementSize * elementCount;
         ASSERT(bufferSize > 0, "Cannot create empty buffer!");

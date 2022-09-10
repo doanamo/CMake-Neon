@@ -37,7 +37,7 @@ namespace Graphics
 
         GLuint GetHandle() const
         {
-            ASSERT(m_handle != OpenGL::InvalidHandle);
+            ASSERT(m_handle != 0);
             return m_handle;
         }
         
@@ -56,6 +56,6 @@ namespace Graphics
         }
 
     private:
-        GLuint m_handle = OpenGL::InvalidHandle;
+        GLuint m_handle = 0;
     };
 } // namespace Graphics

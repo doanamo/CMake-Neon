@@ -54,7 +54,7 @@ namespace Graphics
     bool Shader::Setup(SetupFromSources& params)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
-        ASSERT(m_handle == OpenGL::InvalidHandle);
+        ASSERT(m_handle == 0);
 
         struct ShaderSource
         {
@@ -138,7 +138,7 @@ namespace Graphics
         m_handle = glCreateProgram();
         for(GLuint shaderObject : shaderObjects)
         {
-            if(shaderObject != OpenGL::InvalidHandle)
+            if(shaderObject != 0)
             {
                 glAttachShader(m_handle, shaderObject);
             }
@@ -147,7 +147,7 @@ namespace Graphics
         glLinkProgram(m_handle);
         for(GLuint shaderObject : shaderObjects)
         {
-            if(shaderObject != OpenGL::InvalidHandle)
+            if(shaderObject != 0)
             {
                 glDetachShader(m_handle, shaderObject);
             }

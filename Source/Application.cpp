@@ -61,28 +61,34 @@ bool Application::Setup()
         return false;
 
     // Shader
-    Graphics::Shader::SetupFromSources shaderParams;
-
-    shaderParams.vertexShader.source =
-        "#version 330 core\n"
-        "uniform mat4 inTransform;\n"
-        "layout(location = 0) in vec3 inPosition;\n"
-        "layout(location = 1) in vec3 inColor;\n"
-        "out vec4 outColor;\n"
-        "void main()\n"
-        "{\n"
-        "    gl_Position = inTransform * vec4(inPosition, 1.0f);\n"
-        "    outColor = vec4(inColor, 1.0f);\n"
-        "}\n";
-
-    shaderParams.fragmentShader.source =
-        "#version 330 core\n"
-        "in vec4 inColor;\n"
-        "out vec4 outColor;\n"
-        "void main()\n"
-        "{\n"
-        "    outColor = inColor;\n"
-        "}\n";
+    Graphics::Shader::SetupFromSources shaderParams =
+    {
+        .vertexShader =
+        {
+            .source =
+                "#version 330 core\n"
+                "uniform mat4 inTransform;\n"
+                "layout(location = 0) in vec3 inPosition;\n"
+                "layout(location = 1) in vec3 inColor;\n"
+                "out vec4 outColor;\n"
+                "void main()\n"
+                "{\n"
+                "    gl_Position = inTransform * vec4(inPosition, 1.0f);\n"
+                "    outColor = vec4(inColor, 1.0f);\n"
+                "}\n"
+        },
+        .fragmentShader =
+        {
+            .source =
+                "#version 330 core\n"
+                "in vec4 inColor;\n"
+                "out vec4 outColor;\n"
+                "void main()\n"
+                "{\n"
+                "    outColor = inColor;\n"
+                "}\n"
+        }
+    };
 
     if(!m_shader.Setup(shaderParams))
         return false;

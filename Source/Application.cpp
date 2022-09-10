@@ -1,12 +1,6 @@
 #include "Precompiled.hpp"
 #include "Application.hpp"
 
-struct Vertex
-{
-    glm::vec3 position;
-    glm::vec3 color;
-};
-
 Application::Application(GLFWwindow* window)
     : m_window(window)
 {
@@ -15,6 +9,12 @@ Application::Application(GLFWwindow* window)
 bool Application::Setup()
 {
     // Vertex buffer
+    struct Vertex
+    {
+        glm::vec3 position;
+        glm::vec3 color;
+    };
+
     Vertex vertices[] =
     {
         { { -0.6f, -0.4f, 0.0f }, { 1.0f, 0.0f, 0.0f  } },
@@ -67,25 +67,25 @@ bool Application::Setup()
         {
             .source =
                 "#version 330 core\n"
-                "uniform mat4 inTransform;\n"
-                "layout(location = 0) in vec3 inPosition;\n"
-                "layout(location = 1) in vec3 inColor;\n"
-                "out vec4 outColor;\n"
+                "uniform mat4 vertTransform;\n"
+                "layout(location = 0) in vec3 vertPosition;\n"
+                "layout(location = 1) in vec3 vertColor;\n"
+                "out vec4 fragColor;\n"
                 "void main()\n"
                 "{\n"
-                "    gl_Position = inTransform * vec4(inPosition, 1.0f);\n"
-                "    outColor = vec4(inColor, 1.0f);\n"
+                "    gl_Position = vertTransform * vec4(vertPosition, 1.0f);\n"
+                "    fragColor = vec4(vertColor, 1.0f);\n"
                 "}\n"
         },
         .fragmentShader =
         {
             .source =
                 "#version 330 core\n"
-                "in vec4 inColor;\n"
-                "out vec4 outColor;\n"
+                "in vec4 fragColor;\n"
+                "out vec4 finalColor;\n"
                 "void main()\n"
                 "{\n"
-                "    outColor = inColor;\n"
+                "    finalColor = fragColor;\n"
                 "}\n"
         }
     };
@@ -111,6 +111,18 @@ void Application::Render(float alphaTime)
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glm::mat4 transform;
+    transform = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
+    transform = glm::rotate(transform, (float)glfwGetTime(),
+        glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glUseProgram(m_shader.GetHandle());
+    glUniformMatrix4fv(m_shader.GetUniformIndex("vertTransform"),
+        1, GL_FALSE, glm::value_ptr(transform));
+
+    glBindVertexArray(m_vertexArray.GetHandle());
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 
     OPENGL_CHECK_ERRORS();
 }

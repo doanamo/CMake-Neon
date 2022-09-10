@@ -27,6 +27,12 @@ namespace Graphics
 
         bool Setup(const SetupAttribute* attributes, uint32_t count);
 
+        GLuint GetHandle() const
+        {
+            ASSERT(m_handle != 0);
+            return m_handle;
+        }
+
     private:
         GLuint m_handle = 0;
     };

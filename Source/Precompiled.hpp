@@ -31,6 +31,11 @@ COMPILER_WARNINGS_DISABLE_ALL_PUSH()
 
 // External/glm
 #include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/ext/scalar_constants.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 
 // External/glad
 #include <glad/gl.h>

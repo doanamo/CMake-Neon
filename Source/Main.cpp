@@ -98,8 +98,8 @@ int main()
     {
         glfwPollEvents();
 
-        app.Update(1.0F);
-        app.Render(1.0F);
+        app.Update(1.0f);
+        app.Render(1.0f);
 
         glfwSwapBuffers(window);
     }

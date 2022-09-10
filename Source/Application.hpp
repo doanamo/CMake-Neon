@@ -31,6 +31,7 @@ private:
     GLFWwindow* m_window = nullptr;
 
     Graphics::Buffer m_vertexBuffer;
+    Graphics::Buffer m_indexBuffer;
     Graphics::VertexArray m_vertexArray;
     Graphics::Shader m_shader;
 };

@@ -21,7 +21,7 @@ namespace Graphics
         ASSERT(m_handle == 0);
 
         GLsizeiptr bufferSize = params.elementSize * params.elementCount;
-        ASSERT(bufferSize > 0, "Cannot create empty buffer!");
+        ASSERT(bufferSize > 0, "Cannot create empty buffer");
 
         glGenBuffers(1, &m_handle);
         glBindBuffer(params.type, m_handle);
@@ -45,7 +45,7 @@ namespace Graphics
         uint64_t byteOffset = m_elementSize * elementIndex;
         uint64_t byteSize = m_elementSize * elementCount;
 
-        ASSERT(byteOffset + byteSize <= GetSize(), "Uploading data past buffer size!");
+        ASSERT(byteOffset + byteSize <= GetSize(), "Uploading data past buffer size");
 
         glBindBuffer(m_type, m_handle);
         glBufferSubData(m_type, byteOffset, byteSize, data);
@@ -58,7 +58,7 @@ namespace Graphics
         ASSERT(m_handle != 0);
 
         uint64_t bufferSize = m_elementSize * elementCount;
-        ASSERT(bufferSize > 0, "Cannot create empty buffer!");
+        ASSERT(bufferSize > 0, "Cannot create empty buffer");
 
         glBindBuffer(m_type, m_handle);
         glBufferData(m_type, bufferSize, data, m_usage);

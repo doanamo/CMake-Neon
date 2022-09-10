@@ -28,6 +28,21 @@ int main()
 {
     Logger::Setup();
 
+    // Override working directory
+    if(auto deployPath = Utility::ReadTextFile("DeployPath.txt"))
+    {
+        try
+        {
+            fs::current_path(deployPath.value());
+        }
+        catch(...)
+        {
+            LOG_ERROR("Failed to change working directory to \"{}\"", deployPath.value());
+        }
+    }
+
+    LOG_INFO("Working directory: {}", fs::current_path());
+
     // Initialize GLFW library
     if(!glfwInit())
     {

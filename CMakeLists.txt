@@ -48,7 +48,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMake")
 
 #
-# Sources
+# Files
 #
 
 set(SOURCE_FILES
@@ -73,14 +73,19 @@ set(SOURCE_FILES
     "Source/Graphics/Shader.cpp"
 )
 
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
+set(DEPLOY_FILES
+    "Deploy/Data/Shaders/vertex_color_vs.glsl"
+    "Deploy/Data/Shaders/vertex_color_fs.glsl"
+)
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES} ${DEPLOY_FILES})
 
 #
 # Target
 #
 
 # Executable target
-add_executable(Game ${SOURCE_FILES})
+add_executable(Game ${SOURCE_FILES} ${DEPLOY_FILES})
 target_include_directories(Game PRIVATE "Source")
 
 # Enable precompiled header
@@ -93,6 +98,10 @@ source_group("Generated\\Unity" REGULAR_EXPRESSION "unity_")
 
 # Set as startup project
 set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Game)
+
+# Write path to deploy directory for debugging
+get_filename_component(ABSOLUTE_DEPLOY_PATH "Deploy" ABSOLUTE)
+file(WRITE "${CMAKE_BINARY_DIR}/DeployPath.txt" ${ABSOLUTE_DEPLOY_PATH})
 
 #
 # External

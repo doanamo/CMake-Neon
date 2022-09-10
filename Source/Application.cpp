@@ -86,33 +86,10 @@ bool Application::Setup()
         return false;
 
     // Shader
-    Graphics::Shader::SetupFromSources shaderParams =
+    Graphics::Shader::SetupFromFiles shaderParams =
     {
-        .vertexShader =
-        {
-            .source =
-                "#version 330 core\n"
-                "uniform mat4 vertTransform;\n"
-                "layout(location = 0) in vec3 vertPosition;\n"
-                "layout(location = 1) in vec3 vertColor;\n"
-                "out vec4 fragColor;\n"
-                "void main()\n"
-                "{\n"
-                "    gl_Position = vertTransform * vec4(vertPosition, 1.0f);\n"
-                "    fragColor = vec4(vertColor, 1.0f);\n"
-                "}\n"
-        },
-        .fragmentShader =
-        {
-            .source =
-                "#version 330 core\n"
-                "in vec4 fragColor;\n"
-                "out vec4 finalColor;\n"
-                "void main()\n"
-                "{\n"
-                "    finalColor = fragColor;\n"
-                "}\n"
-        }
+        .vertexShader = "Data/Shaders/vertex_color_vs.glsl",
+        .fragmentShader = "Data/Shaders/vertex_color_fs.glsl"
     };
 
     if(!m_shader.Setup(shaderParams))

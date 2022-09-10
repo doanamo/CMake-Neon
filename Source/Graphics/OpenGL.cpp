@@ -33,12 +33,18 @@ const char* OpenGL::GetErrorName(GLuint error)
 
 bool OpenGL::CheckErrors()
 {
-    GLuint error = GL_NO_ERROR;
-    while(error = glGetError())
+    bool foundErrors = false;
+
+    while(true)
     {
+        GLuint error = glGetError();
+        if(error == GL_NO_ERROR)
+            break;
+
         LOG_ERROR("OpenGL Error: {} {:#06x}", GetErrorName(error), error);
+        foundErrors = true;
     }
-    
-    ASSERT(error == GL_NO_ERROR, "Detected OpenGL errors");
-    return error != GL_NO_ERROR;
+
+    ASSERT(!foundErrors, "Detected OpenGL errors");
+    return false;
 }

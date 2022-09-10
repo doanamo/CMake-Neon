@@ -37,22 +37,22 @@ namespace Graphics
         return true;
     }
 
-    void Buffer::Update(uint64_t elementIndex, uint64_t elementCount, const void* data)
+    void Buffer::Update(uint32_t elementIndex, uint32_t elementCount, const void* data)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
         ASSERT(m_handle != 0);
 
-        uint64_t offset = m_elementSize * elementIndex;
-        uint64_t size = m_elementSize * elementCount;
+        uint64_t byteOffset = m_elementSize * elementIndex;
+        uint64_t byteSize = m_elementSize * elementCount;
 
-        ASSERT(offset + size <= GetSize(), "Uploading data past buffer size!");
+        ASSERT(byteOffset + byteSize <= GetSize(), "Uploading data past buffer size!");
 
         glBindBuffer(m_type, m_handle);
-        glBufferSubData(m_type, offset, size, data);
+        glBufferSubData(m_type, byteOffset, byteSize, data);
         glBindBuffer(m_type, 0);
     }
 
-    void Buffer::Resize(uint64_t elementCount, const void* data)
+    void Buffer::Resize(uint32_t elementCount, const void* data)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
         ASSERT(m_handle != 0);

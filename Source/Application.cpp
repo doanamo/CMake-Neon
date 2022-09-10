@@ -14,6 +14,7 @@ Application::Application(GLFWwindow* window)
 
 bool Application::Setup()
 {
+    // Vertex buffer
     Vertex vertices[] =
     {
         { { -0.6f, -0.4f, 0.0f }, { 1.0f, 0.0f, 0.0f  } },
@@ -33,26 +34,54 @@ bool Application::Setup()
     if(!m_vertexBuffer.Setup(vertexBufferParams))
         return false;
 
+    // Vertex array
+    Graphics::VertexArray::SetupAttribute vertexAttributes[] =
+    {
+        // Position
+        {
+            .buffer = m_vertexBuffer,
+            .type = GL_FLOAT,
+            .location = 0,
+            .count = 3,
+            .stride = sizeof(Vertex),
+            .offset = offsetof(Vertex, position)
+        },
+        // Color
+        {
+            .buffer = m_vertexBuffer,
+            .type = GL_FLOAT,
+            .location = 1,
+            .count = 3,
+            .stride = sizeof(Vertex),
+            .offset = offsetof(Vertex, color)
+        }
+    };
+
+    if(!m_vertexArray.Setup(vertexAttributes, std::size(vertexAttributes)))
+        return false;
+
+    // Shader
     Graphics::Shader::SetupFromSources shaderParams;
 
     shaderParams.vertexShader.source =
-        "#version 330\n"
+        "#version 330 core\n"
         "uniform mat4 inTransform;\n"
-        "attribute vec3 inPosition;\n"
-        "attribute vec3 inColor;\n"
-        "varying vec3 outColor;\n"
+        "layout(location = 0) in vec3 inPosition;\n"
+        "layout(location = 1) in vec3 inColor;\n"
+        "out vec4 outColor;\n"
         "void main()\n"
         "{\n"
         "    gl_Position = inTransform * vec4(inPosition, 1.0f);\n"
-        "    outColor = inColor;\n"
+        "    outColor = vec4(inColor, 1.0f);\n"
         "}\n";
 
     shaderParams.fragmentShader.source =
-        "#version 330\n"
-        "varying vec3 inColor;\n"
+        "#version 330 core\n"
+        "in vec4 inColor;\n"
+        "out vec4 outColor;\n"
         "void main()\n"
         "{\n"
-        "    gl_FragColor = vec4(inColor, 1.0f);\n"
+        "    outColor = inColor;\n"
         "}\n";
 
     if(!m_shader.Setup(shaderParams))

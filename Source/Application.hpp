@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Graphics/Shader.hpp"
 #include "Graphics/Buffer.hpp"
+#include "Graphics/VertexArray.hpp"
+#include "Graphics/Shader.hpp"
 
 class Application final
 {
@@ -30,5 +31,6 @@ private:
     GLFWwindow* m_window = nullptr;
 
     Graphics::Buffer m_vertexBuffer;
+    Graphics::VertexArray m_vertexArray;
     Graphics::Shader m_shader;
 };

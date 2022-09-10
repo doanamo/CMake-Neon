@@ -67,6 +67,8 @@ set(SOURCE_FILES
     "Source/Graphics/OpenGL.cpp"
     "Source/Graphics/Buffer.hpp"
     "Source/Graphics/Buffer.cpp"
+    "Source/Graphics/VertexArray.hpp"
+    "Source/Graphics/VertexArray.cpp"
     "Source/Graphics/Shader.hpp"
     "Source/Graphics/Shader.cpp"
 )

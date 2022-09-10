@@ -26,6 +26,7 @@ namespace Graphics
         glGenBuffers(1, &m_handle);
         glBindBuffer(params.type, m_handle);
         glBufferData(params.type, bufferSize, params.data, params.usage);
+        glBindBuffer(params.type, 0);
 
         m_type = params.type;
         m_usage = params.usage;
@@ -48,6 +49,7 @@ namespace Graphics
 
         glBindBuffer(m_type, m_handle);
         glBufferSubData(m_type, offset, size, data);
+        glBindBuffer(m_type, 0);
     }
 
     void Buffer::Resize(uint64_t elementCount, const void* data)
@@ -60,6 +62,7 @@ namespace Graphics
 
         glBindBuffer(m_type, m_handle);
         glBufferData(m_type, bufferSize, data, m_usage);
+        glBindBuffer(m_type, 0);
 
         LOG_TRACE("Resized buffer ({} -> {} bytes)", GetSize(), bufferSize);
 

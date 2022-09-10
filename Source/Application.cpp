@@ -3,8 +3,8 @@
 
 struct Vertex
 {
-    Eigen::Vector3f position;
-    Eigen::Vector3f color;
+    glm::vec3 position;
+    glm::vec3 color;
 };
 
 Application::Application(GLFWwindow* window)

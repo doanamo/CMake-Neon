@@ -107,8 +107,8 @@ target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/spdlog/I
 target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/spdlog/Library/Windows/$<CONFIG>/spdlog.lib")
 target_compile_definitions(Game PRIVATE SPDLOG_FMT_EXTERNAL SPDLOG_COMPILED_LIB)
 
-# External/Eigen
-target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/Eigen/Include")
+# External/glm
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glm/Include")
 
 # External/glad
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glad/Include")

@@ -29,8 +29,8 @@ COMPILER_WARNINGS_DISABLE_ALL_PUSH()
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-// External/Eigen
-#include <Eigen/Dense>
+// External/glm
+#include <glm/glm.hpp>
 
 // External/glad
 #include <glad/gl.h>

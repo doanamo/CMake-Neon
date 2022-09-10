@@ -75,7 +75,14 @@ bool Application::Setup()
         }
     };
 
-    if(!m_vertexArray.Setup(vertexAttributes, std::size(vertexAttributes)))
+    Graphics::VertexArray::SetupFromParams vertexArrayParams =
+    {
+        .attributes = vertexAttributes,
+        .attributeCount = std::size(vertexAttributes),
+        .indexBuffer = &m_indexBuffer
+    };
+
+    if(!m_vertexArray.Setup(vertexArrayParams))
         return false;
 
     // Shader
@@ -140,7 +147,6 @@ void Application::Render(float alphaTime)
         1, GL_FALSE, glm::value_ptr(transform));
 
     glBindVertexArray(m_vertexArray.GetHandle());
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer.GetHandle());
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
 
     OPENGL_CHECK_ERRORS();

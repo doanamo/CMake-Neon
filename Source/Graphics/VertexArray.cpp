@@ -15,7 +15,7 @@ namespace Graphics
         }
     }
 
-    bool VertexArray::Setup(const SetupAttribute* attributes, uint32_t count)
+    bool VertexArray::Setup(const SetupFromParams& params)
     {
         OPENGL_CHECK_ERRORS_SCOPED();
         ASSERT(m_handle == 0);
@@ -23,12 +23,20 @@ namespace Graphics
         glGenVertexArrays(1, &m_handle);
         glBindVertexArray(m_handle);
 
-        ASSERT(attributes && count > 0);
-        for(int i = 0; i < count; ++i)
+        if(params.indexBuffer)
         {
-            const SetupAttribute& attribute = attributes[i];
+            ASSERT(params.indexBuffer->GetType() == GL_ELEMENT_ARRAY_BUFFER);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, params.indexBuffer->GetHandle());
+        }
 
-            glBindBuffer(attribute.buffer.GetType(), attribute.buffer.GetHandle());
+        ASSERT(params.attributes && params.attributeCount > 0);
+        for(int i = 0; i < params.attributeCount; ++i)
+        {
+            const SetupAttribute& attribute = params.attributes[i];
+
+            ASSERT(attribute.buffer.GetType() == GL_ARRAY_BUFFER);
+            glBindBuffer(GL_ARRAY_BUFFER, attribute.buffer.GetHandle());
+
             glEnableVertexAttribArray(attribute.location);
             glVertexAttribPointer(
                 attribute.location,
@@ -38,10 +46,12 @@ namespace Graphics
                 attribute.stride,
                 (void*)attribute.offset
             );
-            glBindBuffer(attribute.buffer.GetType(), 0);
+
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
 
         glBindVertexArray(0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
         LOG_TRACE("Created vertex array");
         return true;

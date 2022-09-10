@@ -25,7 +25,14 @@ namespace Graphics
             uint64_t offset = 0;
         };
 
-        bool Setup(const SetupAttribute* attributes, uint32_t count);
+        struct SetupFromParams
+        {
+            const SetupAttribute* attributes = nullptr;
+            uint32_t attributeCount = 0;
+            const Buffer* indexBuffer = nullptr;
+        };
+
+        bool Setup(const SetupFromParams& params);
 
         GLuint GetHandle() const
         {

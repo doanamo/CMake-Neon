@@ -1,5 +1,6 @@
 #include "Precompiled.hpp"
 #include "Application.hpp"
+#include "Graphics/OpenGL.hpp"
 
 void GLFWErrorCallback(int error, const char* description)
 {
@@ -97,6 +98,8 @@ int main()
     LOG_INFO("Loaded OpenGL {}.{} context",
         GLAD_VERSION_MAJOR(contextVersion),
         GLAD_VERSION_MINOR(contextVersion));
+
+    OpenGL::PrintExtensions();
 
     // Create application
     Application app(window);

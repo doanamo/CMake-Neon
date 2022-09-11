@@ -2,6 +2,8 @@
 
 namespace OpenGL
 {
+    void PrintExtensions();
+
     const char* GetErrorName(GLuint error);
     bool CheckErrors();
 }

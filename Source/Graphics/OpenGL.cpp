@@ -1,6 +1,18 @@
 #include "Precompiled.hpp"
 #include "OpenGL.hpp"
 
+void OpenGL::PrintExtensions()
+{
+    GLint extensionCount = 0;
+    glGetIntegerv(GL_NUM_EXTENSIONS, &extensionCount);
+
+    LOG_TRACE("Available OpenGL extensions:");
+    for(int i = 0; i < extensionCount; ++i)
+    {
+        LOG_TRACE("  {}", (const char*)glGetStringi(GL_EXTENSIONS, i));
+    }
+}
+
 const char* OpenGL::GetErrorName(GLuint error)
 {
     switch(error)

@@ -68,4 +68,20 @@ namespace Graphics
 
         m_elementCount = elementCount;
     }
+
+    GLenum Buffer::GetIndexEnum() const
+    {
+        ASSERT(m_handle != 0 && m_type == GL_ELEMENT_ARRAY_BUFFER);
+        
+        switch(m_elementSize)
+        {
+        case 1: return GL_UNSIGNED_BYTE;
+        case 2: return GL_UNSIGNED_SHORT;
+        case 4: return GL_UNSIGNED_INT;
+        }
+
+        ASSERT(false, "Invalid index size");
+        return 0;
+    }
+
 } // namespace Graphics

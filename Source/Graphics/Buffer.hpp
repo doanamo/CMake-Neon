@@ -56,6 +56,8 @@ namespace Graphics
             return m_elementSize * m_elementCount;
         }
 
+        GLenum GetIndexEnum() const;
+
     private:
         GLuint m_handle = 0;
         GLenum m_type = 0;

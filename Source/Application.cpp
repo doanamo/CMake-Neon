@@ -17,9 +17,10 @@ bool Application::Setup()
 
     Vertex vertices[] =
     {
-        { {  0.0f,  0.6f, 0.0f }, { 0.0f, 0.0f, 1.0f  } },
-        { {  0.6f, -0.4f, 0.0f }, { 0.0f, 1.0f, 0.0f  } },
-        { { -0.6f, -0.4f, 0.0f }, { 1.0f, 0.0f, 0.0f  } }
+        { { -0.6f,  0.6f, 0.0f }, { 0.0f, 0.0f, 1.0f } },
+        { {  0.6f,  0.6f, 0.0f }, { 0.0f, 1.0f, 0.0f } },
+        { {  0.6f, -0.6f, 0.0f }, { 1.0f, 0.0f, 0.0f } },
+        { { -0.6f, -0.6f, 0.0f }, { 1.0f, 1.0f, 0.0f } }
     };
 
     Graphics::Buffer::SetupFromParams vertexBufferParams
@@ -37,7 +38,8 @@ bool Application::Setup()
     // Index buffer
     uint16_t indices[] =
     {
-        2, 1, 0
+        0, 1, 2,
+        2, 3, 0
     };
 
     Graphics::Buffer::SetupFromParams indexBufferParams
@@ -124,7 +126,8 @@ void Application::Render(float alphaTime)
         1, GL_FALSE, glm::value_ptr(transform));
 
     glBindVertexArray(m_vertexArray.GetHandle());
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+    glDrawElements(GL_TRIANGLES, m_indexBuffer.GetElementCount(),
+        m_indexBuffer.GetIndexEnum(), 0);
 
     OPENGL_CHECK_ERRORS();
 }

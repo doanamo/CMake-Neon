@@ -36,16 +36,17 @@ namespace Graphics
             if(path.empty())
                 continue;
 
-            auto result = Utility::ReadTextFile(path);
-            if(!result.has_value())
+            if(auto result = Utility::ReadTextFile(path))
+            {
+                auto& shaderSource = *shaderSources[i];
+                shaderSource.source = std::move(result.value());
+                shaderSource.path = std::move(path);
+            }
+            else
             {
                 LOG_ERROR("Failed to read shader source from \"{}\" file", path);
                 return false;
             }
-
-            auto& shaderSource = *shaderSources[i];
-            shaderSource.source = std::move(result.value());
-            shaderSource.path = std::move(path);
         }
 
         return Setup(setupFromSources);

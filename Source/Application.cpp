@@ -1,5 +1,6 @@
 #include "Precompiled.hpp"
 #include "Application.hpp"
+#include "System/Image.hpp"
 
 Application::Application(GLFWwindow* window)
     : m_window(window)
@@ -95,6 +96,16 @@ bool Application::Setup()
     };
 
     if(!m_shader.Setup(shaderParams))
+        return false;
+
+    // Texture
+    System::Image::SetupFromFile imageParams =
+    {
+        .path = "Data/Textures/puffy.png"
+    };
+
+    System::Image image;
+    if(!image.Setup(imageParams))
         return false;
 
     return true;

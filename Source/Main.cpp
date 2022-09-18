@@ -4,7 +4,7 @@
 
 void GLFWErrorCallback(int error, const char* description)
 {
-    LOG_ERROR("GLFW Error: {} [{}]", description, error);
+    LOG_ERROR("GLFW: {} [{}]", description, error);
 }
 
 void GLFWKeyboardKeyCallback(GLFWwindow* window,

@@ -63,6 +63,8 @@ set(SOURCE_FILES
     "Source/Common/ScopeGuard.hpp"
     "Source/Common/Utility.hpp"
     "Source/Common/Utility.cpp"
+    "Source/System/Image.hpp"
+    "Source/System/Image.cpp"
     "Source/Graphics/OpenGL.hpp"
     "Source/Graphics/OpenGL.cpp"
     "Source/Graphics/Buffer.hpp"

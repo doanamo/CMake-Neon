@@ -32,6 +32,9 @@ COMPILER_WARNINGS_DISABLE_ALL_PUSH()
 // External/zlib
 #include <zlib.h>
 
+// External/libpng
+#include <png.h>
+
 // External/glm
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>

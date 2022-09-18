@@ -122,6 +122,10 @@ target_compile_definitions(Game PRIVATE SPDLOG_FMT_EXTERNAL SPDLOG_COMPILED_LIB)
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/zlib/Include")
 target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/zlib/Library/Windows/$<CONFIG>/zlib.lib")
 
+# External/libpng
+target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/libpng/Include")
+target_link_libraries(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/libpng/Library/Windows/$<CONFIG>/libpng.lib")
+
 # External/glm
 target_include_directories(Game PRIVATE "${PROJECT_SOURCE_DIR}/External/glm/Include")
 

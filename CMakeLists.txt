@@ -71,6 +71,8 @@ set(SOURCE_FILES
     "Source/Graphics/VertexArray.cpp"
     "Source/Graphics/Shader.hpp"
     "Source/Graphics/Shader.cpp"
+    "Source/Graphics/Texture.hpp"
+    "Source/Graphics/Texture.cpp"
 )
 
 set(DEPLOY_FILES

@@ -1,6 +1,9 @@
 #include "Precompiled.hpp"
 #include "Shader.hpp"
 
+// #Todo:
+// - Cache compiled shader program binaries
+
 namespace Graphics
 {
     Shader::~Shader() noexcept

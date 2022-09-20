@@ -1,7 +1,5 @@
 #pragma once
 
-#include "OpenGL.hpp"
-
 namespace Graphics
 {
     class Shader final

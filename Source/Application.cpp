@@ -13,15 +13,15 @@ bool Application::Setup()
     struct Vertex
     {
         glm::vec3 position;
-        glm::vec3 color;
+        glm::vec2 texture;
     };
 
     Vertex vertices[] =
     {
-        { { -0.6f,  0.6f, 0.0f }, { 0.0f, 0.0f, 1.0f } },
-        { {  0.6f,  0.6f, 0.0f }, { 0.0f, 1.0f, 0.0f } },
-        { {  0.6f, -0.6f, 0.0f }, { 1.0f, 0.0f, 0.0f } },
-        { { -0.6f, -0.6f, 0.0f }, { 1.0f, 1.0f, 0.0f } }
+        { { -0.6f,  0.6f, 0.0f }, { 0.0f, 1.0f } },
+        { {  0.6f,  0.6f, 0.0f }, { 1.0f, 1.0f } },
+        { {  0.6f, -0.6f, 0.0f }, { 1.0f, 0.0f } },
+        { { -0.6f, -0.6f, 0.0f }, { 0.0f, 0.0f } }
     };
 
     Graphics::Buffer::SetupFromParams vertexBufferParams
@@ -72,9 +72,9 @@ bool Application::Setup()
             .buffer = m_vertexBuffer,
             .type = GL_FLOAT,
             .location = 1,
-            .count = 3,
+            .count = 2,
             .stride = sizeof(Vertex),
-            .offset = offsetof(Vertex, color)
+            .offset = offsetof(Vertex, texture)
         }
     };
 
@@ -91,8 +91,8 @@ bool Application::Setup()
     // Shader
     Graphics::Shader::SetupFromFiles shaderParams =
     {
-        .vertexShader = "Data/Shaders/vertex_color_vs.glsl",
-        .fragmentShader = "Data/Shaders/vertex_color_fs.glsl"
+        .vertexShader = "Data/Shaders/vertex_texture_vs.glsl",
+        .fragmentShader = "Data/Shaders/vertex_texture_fs.glsl"
     };
 
     if(!m_shader.Setup(shaderParams))
@@ -106,6 +106,14 @@ bool Application::Setup()
 
     System::Image image;
     if(!image.Setup(imageParams))
+        return false;
+
+    Graphics::Texture::SetupFromImage textureParams =
+    {
+        .image = image
+    };
+
+    if(!m_texture.Setup(textureParams))
         return false;
 
     return true;
@@ -136,6 +144,7 @@ void Application::Render(float alphaTime)
     glUniformMatrix4fv(m_shader.GetUniformIndex("vertTransform"),
         1, GL_FALSE, glm::value_ptr(transform));
 
+    glBindTexture(GL_TEXTURE_2D, m_texture.GetHandle());
     glBindVertexArray(m_vertexArray.GetHandle());
     glDrawElements(GL_TRIANGLES, m_indexBuffer.GetElementCount(),
         m_indexBuffer.GetIndexEnum(), 0);

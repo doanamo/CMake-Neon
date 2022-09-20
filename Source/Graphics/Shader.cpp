@@ -1,4 +1,5 @@
 #include "Precompiled.hpp"
+#include "OpenGL.hpp"
 #include "Shader.hpp"
 
 // #Todo:

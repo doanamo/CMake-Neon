@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Graphics/OpenGL.hpp"
 #include "Graphics/Buffer.hpp"
 #include "Graphics/VertexArray.hpp"
+#include "Graphics/Texture.hpp"
 #include "Graphics/Shader.hpp"
 
 class Application final
@@ -33,5 +35,6 @@ private:
     Graphics::Buffer m_vertexBuffer;
     Graphics::Buffer m_indexBuffer;
     Graphics::VertexArray m_vertexArray;
+    Graphics::Texture m_texture;
     Graphics::Shader m_shader;
 };

@@ -80,6 +80,8 @@ set(SOURCE_FILES
 set(DEPLOY_FILES
     "Deploy/Data/Shaders/vertex_color_vs.glsl"
     "Deploy/Data/Shaders/vertex_color_fs.glsl"
+    "Deploy/Data/Shaders/vertex_texture_vs.glsl"
+    "Deploy/Data/Shaders/vertex_texture_fs.glsl"
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES} ${DEPLOY_FILES})

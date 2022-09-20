@@ -1,5 +1,6 @@
 #include "Precompiled.hpp"
 #include "Buffer.hpp"
+#include "OpenGL.hpp"
 
 namespace Graphics
 {

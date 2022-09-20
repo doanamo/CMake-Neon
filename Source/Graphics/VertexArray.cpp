@@ -1,6 +1,7 @@
 #include "Precompiled.hpp"
 #include "VertexArray.hpp"
 #include "Buffer.hpp"
+#include "OpenGL.hpp"
 
 namespace Graphics
 {

@@ -38,11 +38,11 @@ namespace Graphics
             break;
 
         case 3:
-            format = GL_RGB;
+            format = params.linear ? GL_RGB : GL_SRGB8;
             break;
 
         case 4:
-            format = GL_RGBA;
+            format = params.linear ? GL_RGBA : GL_SRGB8_ALPHA8;
             break;
 
         default:
@@ -85,8 +85,23 @@ namespace Graphics
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+        GLenum pixelFormat;
+        switch(params.format)
+        {
+        case GL_SRGB8:
+            pixelFormat = GL_RGB;
+            break;
+
+        case GL_SRGB8_ALPHA8:
+            pixelFormat = GL_RGBA;
+            break;
+
+        default:
+            pixelFormat = params.format;
+        }
+
         glTexImage2D(GL_TEXTURE_2D, 0, params.format, params.width, params.height,
-            0, params.format, GL_UNSIGNED_BYTE, params.data);
+            0, pixelFormat, GL_UNSIGNED_BYTE, params.data);
 
         if(params.mipmaps)
         {

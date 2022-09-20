@@ -19,6 +19,7 @@ namespace Graphics
         struct SetupFromImage
         {
             const System::Image& image;
+            bool linear = false;
             bool mipmaps = true;
         };
 

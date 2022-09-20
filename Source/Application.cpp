@@ -132,6 +132,7 @@ void Application::Render(float alphaTime)
     glfwGetFramebufferSize(m_window, &width, &height);
     glViewport(0, 0, width, height);
 
+    glEnable(GL_FRAMEBUFFER_SRGB);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 

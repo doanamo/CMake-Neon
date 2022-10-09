@@ -5,7 +5,9 @@ std::optional<std::string> Utility::ReadTextFile(const fs::path& path)
 {
     std::ifstream file(path);
     if(!file.is_open())
+    {
         return std::nullopt;
+    }
 
     // Allocate string buffer
     file.seekg(0, std::ios::end);

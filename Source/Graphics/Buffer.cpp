@@ -76,9 +76,9 @@ namespace Graphics
         
         switch(m_elementSize)
         {
-        case 1: return GL_UNSIGNED_BYTE;
-        case 2: return GL_UNSIGNED_SHORT;
-        case 4: return GL_UNSIGNED_INT;
+            case 1: return GL_UNSIGNED_BYTE;
+            case 2: return GL_UNSIGNED_SHORT;
+            case 4: return GL_UNSIGNED_INT;
         }
 
         ASSERT(false, "Invalid index size");
